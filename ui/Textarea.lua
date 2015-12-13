@@ -610,9 +610,21 @@ end
 
 function Textarea:getMaxLines()
     local n_lines = 0
+    --added
+    local count = 0
     for i, c in ipairs(self.line_text) do
+        --count characters...
+        count = count+1
+        
         if c.character ~= '\n' then
             n_lines = c.line + 1
+        end
+        
+        --if characters are bigger the wrap width...
+        if count >= self.text.wrap_width then
+           --...count the wrapped lines
+           n_lines = c.line + 1
+           count = 0
         end
     end
     return n_lines
